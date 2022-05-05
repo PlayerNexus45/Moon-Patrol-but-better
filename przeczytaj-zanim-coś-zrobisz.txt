@@ -1,0 +1,10 @@
+Witaj Dżejsonie
+sam łazik będzie się tylko poruszał trochę do przodu i trochę do tyłu
+to tło i ziemia będzie się przemieszczać w drugim kierunku
+trzeba zrobić system generacji trasy
+https://github.com/jakebox/moon-pytrol
+jakiś rusek zrobił podobnie tylko jego kod jest shit
+still przyjemnie mieć jakiś szablon
+dźwięki ogarne programem 
+
+xoxo Migel

@@ -1,13 +1,13 @@
 #Abandon all hope ye who enter here
 import pygame
 import sys
-#witaj jsonie de rullo tutaj wytumacze ci troche jak gra bedzie dzialac
-#
 class Rover:
     def __init__(self, mp):
         self.screen = mp.screen
+        self.screen_rect = self.screen.get_rect()
         self.image = pygame.image.load("placeholder.png")
         self.rect = self.image.get_rect()
+        self.rect.bottomleft = self.screen_rect.bottomleft
     def show(self):
         self.screen.blit(self.image, self.rect)
 
@@ -15,7 +15,7 @@ class MoonPatrol:
     def __init__(self):
         pygame.init()
         pygame.display.set_caption("Moon Patrol")
-        resolution = (800, 600)
+        resolution = (1024, 768)
         self.screen = pygame.display.set_mode(resolution)
         self.bgcolor = (51, 51, 255)
         self.rover = Rover(self)

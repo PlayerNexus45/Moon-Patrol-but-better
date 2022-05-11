@@ -10,28 +10,27 @@ class Rover:
         self._startx, self._starty = pos
         self.rect.x = self._startx
         self.rect.y = self._starty
-        self._dy = 5
+        self._dy = 0
         self._moving_right = False
         self._moving_left = False
         self._jumping = False
         self.speed = 1
+        self.gravity = 1
     def show(self):
         self.screen.blit(self.image, self.rect)
     def update(self):
-        if not self._jumping:
-            self.equi()
-            if self._moving_right and self.rect.x < 1024:
-                self.rect.x += self.speed
-            if self._moving_left and self.rect.x > 0:
-                self.rect.x -= self.speed
-        else:
-            if self._dy >= -10:
-                self.rect.y -= (self._dy * abs(self._dy)) * 0.5
-            else: 
-                self._dy = 10
-                self._jumping = False
-        if self.rect.y < self._starty:
-            self.rect.y += 1
+        self.equi()
+        if self._moving_right and self.rect.x < 1024:
+            self.rect.x += self.speed
+        if self._moving_left and self.rect.x > 0:
+            self.rect.x -= self.speed
+        if self._jumping and not self._dy <-25:
+            print(self._dy)
+            self.rect.y -= self._dy
+            self._dy -= self.gravity
+            pygame.time.delay(10)
+    
+        
 
     def equi(self):
         if self._moving_left is not True and self._moving_right is not True and self.rect.x != self._startx:
@@ -39,8 +38,8 @@ class Rover:
                 self.rect.x -= self.speed
             else:
                 self.rect.x += self.speed
-
-    
+    def jump(self):
+        self._dy=25
 
 class MoonPatrol:
     def __init__(self):
@@ -68,6 +67,7 @@ class MoonPatrol:
                     self.rover._moving_left = True
                 if event.key == pygame.K_UP:
                     self.rover._jumping = True
+                    self.rover.jump()
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_RIGHT:
                     self.rover._moving_right = False
@@ -80,6 +80,6 @@ class MoonPatrol:
             self._update_screen()
 
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     moon_patrol = MoonPatrol()
     moon_patrol.run_game()

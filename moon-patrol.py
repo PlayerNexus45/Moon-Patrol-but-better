@@ -7,6 +7,7 @@ import random
 
 from obstackle import Toxic
 from Rover import Rover
+from ground import Ground
 
 class MoonPatrol:
     def __init__(self):
@@ -16,12 +17,13 @@ class MoonPatrol:
         pygame.display.set_caption("Moon Patrol")
         self.toxbrl = pygame.sprite.Group()
         resolution = (1280, 1024)
-        self.ground_pos = 700
+        self.ground_pos = 650
         self.screen = pygame.display.set_mode(resolution)
         self.bgcolor = (20, 20, 20)
         self.sbcolor = (69, 78, 255)
         self.rover = Rover(self, (200, self.ground_pos))
         self.time_since_last_tox = 0
+        self.grounds = pygame.sprite.Group()
     
     def genToxic(self, x):
         toxic = Toxic(self, self.ground_pos, x, 73)
@@ -32,9 +34,16 @@ class MoonPatrol:
         if self.time_since_last_tox > random.randrange(3, 10):
             self.genToxic(random.randrange(1280, 1400))
             self.time_since_last_tox = 0
+        if len(self.grounds) <=1:
+            gd = Ground(self)
+            self.grounds.add(gd)
+
     
     def _update_screen(self):
         self.screen.fill(self.bgcolor)
+        for gd in self.grounds:
+            gd.show()
+        self.grounds.update()
         self.rover.show()
         self.rover.update()
         for tox in self.toxbrl:

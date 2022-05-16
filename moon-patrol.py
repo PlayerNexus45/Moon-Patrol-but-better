@@ -14,7 +14,7 @@ class MoonPatrol:
         
         pygame.init()
         pygame.display.set_caption("Moon Patrol")
-        self.toxbrl = pygame.sprite.Group()
+        self.allcolliders = pygame.sprite.Group()
         resolution = (1280, 1024)
         self.ground_pos = 700
         self.screen = pygame.display.set_mode(resolution)
@@ -25,7 +25,7 @@ class MoonPatrol:
     
     def genToxic(self, x):
         toxic = Toxic(self, self.ground_pos, x, 73)
-        self.toxbrl.add(toxic)
+        self.allcolliders.add(toxic)
 
     def worldgen(self):
         self.time_since_last_tox += self.dt
@@ -37,9 +37,9 @@ class MoonPatrol:
         self.screen.fill(self.bgcolor)
         self.rover.show()
         self.rover.update()
-        for tox in self.toxbrl:
-            tox.show()
-        self.toxbrl.update()
+        for col in self.allcolliders:
+            col.show()
+        self.allcolliders.update()
         self.worldgen()
         pygame.display.flip()
     
@@ -65,7 +65,8 @@ class MoonPatrol:
     def run_game(self):
         while True:
             self.dt = self.clock.tick()
-
+            if self.rover._check_death(self.allcolliders):
+                print("You dun goofed")
             self._check_events()
             self._update_screen()
             self.clock.tick(60)

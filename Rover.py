@@ -45,3 +45,5 @@ class Rover(Sprite):
         if not self._jumping:
             self._jumping = True
             self._dy=25
+    def _check_death(self, col):
+        return pygame.sprite.spritecollideany(self, col)

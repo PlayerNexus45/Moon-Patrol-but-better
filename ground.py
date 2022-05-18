@@ -1,10 +1,12 @@
 import pygame
+from gamestats import gameStats
 from pygame.sprite import Sprite
 
 class Ground(Sprite):
     def __init__ (self, mp):
         super().__init__()
         self.grounds = mp.grounds
+        self.gs = gameStats()
         self.screen = mp.screen
         self.ground_image = pygame.image.load("images/ground.png")
         self.rect = self.ground_image.get_rect()
@@ -12,7 +14,7 @@ class Ground(Sprite):
         self.rect.y = 700
 
     def update(self):
-        self.rect.x -= 4
+        self.rect.x -= self.gs.worldspeed
         if self.rect.x <= -self.rect.width:
             self.kill()
 

@@ -12,7 +12,7 @@ class Ground(Sprite):
         self.rect.y = 700
 
     def update(self):
-        self.rect.x -= 3
+        self.rect.x -= 4
         if self.rect.x <= -self.rect.width:
             self.kill()
 

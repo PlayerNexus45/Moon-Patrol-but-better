@@ -16,7 +16,7 @@ class Rover(Sprite):
         self._moving_left = False
         self._jumping = False
         
-        self.speed = 3
+        self.speed = 5
         self.gravity = 1
     
     def show(self):

@@ -9,7 +9,7 @@ class Toxic(Sprite):
         self.rect = self.image.get_rect()
         self.rect.bottom = g_pos + y_off
         self.rect.x = x
-        self.speed = 3
+        self.speed = 4
     def update(self):
         self.rect.x -= self.speed
         if self.rect.x <= -60:

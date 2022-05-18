@@ -10,6 +10,7 @@ from Rover import Rover
 from ground import Ground
 from gamestats import gameStats
 from scoreboard import Scoreboard
+from endgame import EndGame
 
 class MoonPatrol:
     def __init__(self):
@@ -17,22 +18,29 @@ class MoonPatrol:
         
         pygame.init()
         pygame.display.set_caption("Moon Patrol")
+        self.gameRunning = True
         self.allcolliders = pygame.sprite.Group()
         resolution = (1280, 1024)
         self.screen = pygame.display.set_mode(resolution)
         self.delay = 20
         self.gs = gameStats()
         self.sc = Scoreboard(self.gs, self)
+        self.end = EndGame(self)
         
         self.bgcolor = (20, 20, 20)
         self.sbcolor = (69, 78, 255)
         self.rover = Rover(self, (200, self.gs.ground_pos))
         self.time_since_last_tox = 0
         self.grounds = pygame.sprite.Group()
+        self.test_image = pygame.image.load("images/ground.png")
     
     def genToxic(self, x):
-        toxic = Toxic(self, self.gs.ground_pos, x, 73)
+        toxic = Toxic(self, self.gs.ground_pos, x, 60)
         self.allcolliders.add(toxic)
+
+
+
+
 
     def worldgen(self):
         self.time_since_last_tox += self.dt
@@ -62,6 +70,12 @@ class MoonPatrol:
         else:
             self.delay -= 1
         self.sc.show_score()
+        if self.rover._check_death(self.allcolliders):
+            self.end.show_endscreen()
+            pygame.time.delay(1000)
+            pygame.display.flip()
+            pygame.time.delay(5000)
+            sys.exit()
         pygame.display.flip()
     
     def _check_events(self):
@@ -84,15 +98,12 @@ class MoonPatrol:
                     self.rover._moving_left = False
 
     def run_game(self):
-        while True:
+        while self.gameRunning:
             self.dt = self.clock.tick()
-            if self.rover._check_death(self.allcolliders):
-                print("You dun goofed")
             self._check_events()
             self._update_screen()
 
             self.clock.tick(60)
-
 
 if __name__ == "__main__":
     moon_patrol = MoonPatrol()

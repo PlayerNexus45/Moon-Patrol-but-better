@@ -10,7 +10,7 @@ from Rover import Rover
 from ground import Ground
 from gamestats import gameStats
 from scoreboard import Scoreboard
-from endgame import EndGame
+from endgame import EndGame, FinalScore, GameOver , HighScore
 
 class MoonPatrol:
     def __init__(self):
@@ -26,6 +26,9 @@ class MoonPatrol:
         self.gs = gameStats()
         self.sc = Scoreboard(self.gs, self)
         self.end = EndGame(self)
+        self.final = FinalScore(self.gs,self)
+        self.over = GameOver(self)
+        self.high = HighScore(self, self.gs)
         
         self.bgcolor = (20, 20, 20)
         self.sbcolor = (69, 78, 255)
@@ -72,6 +75,9 @@ class MoonPatrol:
         self.sc.show_score()
         if self.rover._check_death(self.allcolliders):
             self.end.show_endscreen()
+            self.final.show_fianl_score()
+            self.over.show_game_over()
+            self.high.show_game_over()
             pygame.time.delay(1000)
             pygame.display.flip()
             pygame.time.delay(5000)

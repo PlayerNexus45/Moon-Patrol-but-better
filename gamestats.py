@@ -10,6 +10,7 @@ class gameStats():
             lines = f.readlines()
             if lines is not None:
                 self.hs = lines
+        self.hs = 100000000000000000000000000
     def addPoints(self):
         self.points += 1
         print(self.points)

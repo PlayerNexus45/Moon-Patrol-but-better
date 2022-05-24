@@ -54,5 +54,7 @@ class Rover(Sprite):
         return pygame.sprite.spritecollideany(self, col)
     def _take_damage(self):
         self.image = self.expimage
+        self.rect.y -= 50
+        self.rect.x -= 20
         self.screen.blit(self.image, self.rect)
         self.explsound.play()

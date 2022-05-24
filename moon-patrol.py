@@ -5,7 +5,7 @@ from pygame import mixer
 import sys
 import random
 
-from obstackle import Toxic
+from obstackle import Toxic, Mine, PSA
 from Rover import Rover
 from ground import Ground
 from gamestats import gameStats
@@ -40,11 +40,16 @@ class MoonPatrol:
         self.test_image = pygame.image.load("images/ground.png")
         self.goff = 0
         self.level = 1
-    
+
     def genToxic(self, x):
         toxic = Toxic(self, self.gs.ground_pos, x, 0)
         self.allcolliders.add(toxic)
-
+    def genMine(self, x):
+        mine = Mine(self, self.gs.ground_pos, x, 0)
+        self.allcolliders.add(mine)
+    def genPSA(self, x):
+        psa = PSA(self, self.gs.ground_pos-400, x, 0)
+        self.allcolliders.add(psa)
 
 
 
@@ -110,11 +115,13 @@ class MoonPatrol:
                 if event.key == pygame.K_LEFT:
                     self.rover._moving_left = False
             if event.type == pygame.USEREVENT+2:
-                r = random.randrange(0,2)
+                r = random.randrange(0,3)
                 if r == 0:
                     self.genToxic(random.randrange(1280, 1400))
                 elif r == 1:
-                    self.genToxic(random.randrange(1280, 1400))
+                    self.genMine(random.randrange(1280, 1400))
+                elif r == 2:
+                    self.genPSA(random.randrange(1280, 1400))
 
     def run_game(self):
         pygame.time.set_timer(pygame.USEREVENT+2, random.randrange(2000, 5000))

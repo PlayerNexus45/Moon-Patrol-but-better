@@ -1,7 +1,7 @@
 #Abandon all hope ye who enter here
 import pygame
 from pygame.sprite import Sprite
-
+from pygame import mixer
 import sys
 import random
 
@@ -32,6 +32,8 @@ class MoonPatrol:
         
         self.bgcolor = (20, 20, 20)
         self.sbcolor = (69, 78, 255)
+        mixer.music.load("sounds/background.wav")
+        mixer.music.play(-1)
         self.rover = Rover(self, (200, self.gs.ground_pos -50))
         self.time_since_last_tox = 0
         self.grounds = pygame.sprite.Group()
@@ -54,12 +56,12 @@ class MoonPatrol:
             self.grounds.add(gd)
         if self.level == 1:
             self.time_since_last_tox += self.dt
-            if self.time_since_last_tox > random.randrange(3, 10):
-                self.genToxic(random.randrange(1280, 1400))
+            if self.time_since_last_tox > random.randrange(2, 5):
+                self.genToxic(random.randrange(1280, 1300))
                 self.time_since_last_tox = 0
         elif self.level == 2:
             self.time_since_last_tox += self.dt
-            if self.time_since_last_tox > random.randrange(3, 10):
+            if self.time_since_last_tox > random.randrange(1, 5):
                 self.genToxic(random.randrange(1280, 1400))
                 self.time_since_last_tox = 0
 
@@ -85,7 +87,6 @@ class MoonPatrol:
         if self.rover._check_death(self.allcolliders):
             self.rover._take_damage()
             pygame.display.flip()
-            pygame.time.delay(1000)
             self.end.show_endscreen()
             self.final.show_fianl_score()
             self.over.show_game_over()

@@ -1,6 +1,6 @@
 import pygame
 from pygame.sprite import Sprite
-
+from pygame import mixer
 class Rover(Sprite):
     def __init__(self, mp, pos):
         super().__init__()
@@ -9,6 +9,8 @@ class Rover(Sprite):
         self.screen_rect = self.screen.get_rect()
         self.image = pygame.image.load("images/carplaceholder.png")
         self.expimage = pygame.image.load("images/explosion.png")
+        self.jumpsound = mixer.Sound("sounds/jump.wav")
+        self.explsound = mixer.Sound("sounds/explosion.wav")
         self.rect = self.image.get_rect()
         
         self._startx, self._starty = pos
@@ -45,6 +47,7 @@ class Rover(Sprite):
 
     def jump(self):
         if not self._jumping:
+            self.jumpsound.play()
             self._jumping = True
             self._dy=25
     def _check_death(self, col):
@@ -52,3 +55,4 @@ class Rover(Sprite):
     def _take_damage(self):
         self.image = self.expimage
         self.screen.blit(self.image, self.rect)
+        self.explsound.play()

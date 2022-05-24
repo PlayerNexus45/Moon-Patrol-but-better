@@ -4,9 +4,11 @@ from pygame.sprite import Sprite
 class Rover(Sprite):
     def __init__(self, mp, pos):
         super().__init__()
+        self.mp = mp
         self.screen = mp.screen
         self.screen_rect = self.screen.get_rect()
         self.image = pygame.image.load("images/carplaceholder.png")
+        self.expimage = pygame.image.load("images/explosion.png")
         self.rect = self.image.get_rect()
         
         self._startx, self._starty = pos
@@ -47,3 +49,6 @@ class Rover(Sprite):
             self._dy=25
     def _check_death(self, col):
         return pygame.sprite.spritecollideany(self, col)
+    def _take_damage(self):
+        self.image = self.expimage
+        self.screen.blit(self.image, self.rect)

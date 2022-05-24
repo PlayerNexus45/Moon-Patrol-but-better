@@ -10,7 +10,19 @@ class gameStats():
             lines = f.readlines()
             if lines is not None:
                 self.hs = lines
-        self.hs = 100000000000000000000000000
+        str1 = ""
+        for ele in self.hs: 
+            str1 += ele  
+        self.hs = int(str1)
+
+
     def addPoints(self):
         self.points += 1
         print(self.points)
+
+    def setHighScore(self):
+        if self.points > self.hs:
+            self.hs = str(self.points)
+            print("hs is ",self.hs)
+            with open("hs.txt", 'w') as f:
+                f.write(self.hs)

@@ -22,7 +22,7 @@ class FinalScore:
         self.screen = mp.screen
         self.game_stats = game_stats
         self.text_color = (30, 30, 30)
-        self.font = pygame.font.SysFont(None, 48)
+        self.font = pygame.font.SysFont(None, 100)
 
 
     def prep_score(self):
@@ -44,7 +44,7 @@ class GameOver:
 
 
     def prep_score(self):
-        game_over_str = ("GAME OVERS")
+        game_over_str = ("GAME OVER")
         self.score_image = self.font.render(game_over_str, True, self.text_color, None)
         self.rect = self.score_image.get_rect()
         self.rect.midtop = (620, 300)
@@ -63,7 +63,8 @@ class HighScore:
 
 
     def prep_score(self):
-        game_over_str = ("High_score: "+str(self.game_stats.hs))
+        self.game_stats.setHighScore()
+        game_over_str = ("High score: "+str(self.game_stats.hs))
         self.score_image = self.font.render(game_over_str, True, self.text_color, None)
         self.rect = self.score_image.get_rect()
         self.rect.midtop = (620, 350)

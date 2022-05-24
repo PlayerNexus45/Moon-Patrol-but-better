@@ -32,13 +32,15 @@ class MoonPatrol:
         
         self.bgcolor = (20, 20, 20)
         self.sbcolor = (69, 78, 255)
-        self.rover = Rover(self, (200, self.gs.ground_pos))
+        self.rover = Rover(self, (200, self.gs.ground_pos -50))
         self.time_since_last_tox = 0
         self.grounds = pygame.sprite.Group()
         self.test_image = pygame.image.load("images/ground.png")
+        self.goff = 0
+        self.level = 1
     
     def genToxic(self, x):
-        toxic = Toxic(self, self.gs.ground_pos, x, 60)
+        toxic = Toxic(self, self.gs.ground_pos, x, 0)
         self.allcolliders.add(toxic)
 
 
@@ -46,13 +48,20 @@ class MoonPatrol:
 
 
     def worldgen(self):
-        self.time_since_last_tox += self.dt
-        if self.time_since_last_tox > random.randrange(3, 10):
-            self.genToxic(random.randrange(1280, 1400))
-            self.time_since_last_tox = 0
-        if len(self.grounds) <=1:
-            gd = Ground(self)
+        if len(self.grounds) <=8:
+            gd = Ground(self, self.goff)
+            self.gs.ground_pos -= self.goff
             self.grounds.add(gd)
+        if self.level == 1:
+            self.time_since_last_tox += self.dt
+            if self.time_since_last_tox > random.randrange(3, 10):
+                self.genToxic(random.randrange(1280, 1400))
+                self.time_since_last_tox = 0
+        elif self.level == 2:
+            self.time_since_last_tox += self.dt
+            if self.time_since_last_tox > random.randrange(3, 10):
+                self.genToxic(random.randrange(1280, 1400))
+                self.time_since_last_tox = 0
 
     
     def _update_screen(self):
@@ -74,13 +83,16 @@ class MoonPatrol:
             self.delay -= 1
         self.sc.show_score()
         if self.rover._check_death(self.allcolliders):
+            self.rover._take_damage()
+            pygame.display.flip()
+            pygame.time.delay(1000)
             self.end.show_endscreen()
             self.final.show_fianl_score()
             self.over.show_game_over()
             self.high.show_game_over()
             pygame.time.delay(1000)
             pygame.display.flip()
-            pygame.time.delay(5000)
+            pygame.time.delay(8000)
             sys.exit()
         pygame.display.flip()
     
@@ -97,6 +109,10 @@ class MoonPatrol:
                     self.rover.jump()
                 # if event.key == pygame.K_t:
                 #     self.genToxic(1280)
+                # if event.key == pygame.K_u:
+                #     self.goff = -5
+                # if event.key == pygame.K_j:
+                #     self.goff = 5
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_RIGHT:
                     self.rover._moving_right = False

@@ -2,7 +2,7 @@ import pygame
 
 class gameStats():
     def __init__(self):
-        self. worldspeed = 4
+        self.worldspeed = 4
         self.ground_pos = 650
         self.points = 0
         self.hspath = "hs.txt"
@@ -18,7 +18,7 @@ class gameStats():
 
     def addPoints(self):
         self.points += 1
-        print(self.points)
+        #print(self.points)
 
     def setHighScore(self):
         if self.points > self.hs:

@@ -54,16 +54,6 @@ class MoonPatrol:
             gd = Ground(self, self.goff)
             self.gs.ground_pos -= self.goff
             self.grounds.add(gd)
-        if self.level == 1:
-            self.time_since_last_tox += self.dt
-            if self.time_since_last_tox > random.randrange(2, 5):
-                self.genToxic(random.randrange(1280, 1300))
-                self.time_since_last_tox = 0
-        elif self.level == 2:
-            self.time_since_last_tox += self.dt
-            if self.time_since_last_tox > random.randrange(1, 5):
-                self.genToxic(random.randrange(1280, 1400))
-                self.time_since_last_tox = 0
 
     
     def _update_screen(self):
@@ -119,14 +109,21 @@ class MoonPatrol:
                     self.rover._moving_right = False
                 if event.key == pygame.K_LEFT:
                     self.rover._moving_left = False
+            if event.type == pygame.USEREVENT+2:
+                r = random.randrange(0,2)
+                if r == 0:
+                    self.genToxic(random.randrange(1280, 1400))
+                elif r == 1:
+                    self.genToxic(random.randrange(1280, 1400))
 
     def run_game(self):
+        pygame.time.set_timer(pygame.USEREVENT+2, random.randrange(2000, 5000))
         while self.gameRunning:
+            self.clock.tick(60)
             self.dt = self.clock.tick()
             self._check_events()
             self._update_screen()
 
-            self.clock.tick(60)
 
 if __name__ == "__main__":
     moon_patrol = MoonPatrol()

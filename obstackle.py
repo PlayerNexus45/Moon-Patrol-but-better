@@ -6,10 +6,11 @@ class Toxic(Sprite):
         super().__init__()
         self.screen = mp.screen
         self.image = pygame.image.load("images/toxicTest2.png")
+        print("barrel")
         self.rect = self.image.get_rect()
         self.rect.bottom = g_pos + y_off
         self.rect.x = x
-        self.speed = 4
+        self.speed = mp.gs.worldspeed
     def update(self):
         self.rect.x -= self.speed
         if self.rect.x <= -60:

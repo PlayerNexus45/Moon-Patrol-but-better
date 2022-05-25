@@ -32,12 +32,11 @@ class MoonPatrol:
         
         self.bgcolor = (20, 20, 20)
         self.sbcolor = (69, 78, 255)
-        mixer.music.load("sounds/background.wav")
-        mixer.music.play(-1)
+        # mixer.music.load("sounds/background.wav")
+        # mixer.music.play(-1)
         self.rover = Rover(self, (200, self.gs.ground_pos -50))
         self.time_since_last_tox = 0
         self.grounds = pygame.sprite.Group()
-        self.test_image = pygame.image.load("images/ground.png")
         self.goff = 0
         self.level = 1
 
@@ -48,7 +47,7 @@ class MoonPatrol:
         mine = Mine(self, self.gs.ground_pos, x, 0)
         self.allcolliders.add(mine)
     def genPSA(self, x):
-        psa = PSA(self, self.gs.ground_pos-400, x, 0)
+        psa = PSA(self, self.gs.ground_pos-300, x, 0)
         self.allcolliders.add(psa)
 
 

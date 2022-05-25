@@ -12,7 +12,7 @@ class Toxic(Sprite):
         self.speed = mp.gs.worldspeed
     def update(self):
         self.rect.x -= self.speed
-        if self.rect.x <= -60:
+        if self.rect.x <= -100:
             self.kill()
     def show(self):
         self.screen.blit(self.image, self.rect)
@@ -28,7 +28,7 @@ class Mine(Sprite):
         self.speed = mp.gs.worldspeed
     def update(self):
         self.rect.x -= self.speed
-        if self.rect.x <= -60:
+        if self.rect.x <= -100:
             self.kill()
     def show(self):
         self.screen.blit(self.image, self.rect)
@@ -41,10 +41,10 @@ class PSA(Sprite):
         self.rect = self.image.get_rect()
         self.rect.bottom = g_pos + y_off
         self.rect.x = x
-        self.speed = mp.gs.worldspeed
+        self.speed = 6
     def update(self):
         self.rect.x -= self.speed
-        if self.rect.x <= -60:
+        if self.rect.x <= -300:
             self.kill()
     def show(self):
         self.screen.blit(self.image, self.rect)
